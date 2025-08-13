@@ -1,9 +1,9 @@
 # ESAME TELERILEVAMENTO GEO-ECOLOGICO IN R
-## ALICE MORICOLI
->matricola: 1178441
+> ## ALICE MORICOLI
+>> ### matricola: 1178441
 
-## Introduzione
-Tra il **15** e **16 settembre 2022**, nella regione **Marche** si verificò un'**alluvione di straordinaria gravità**, che ha coinvolto in particolar modo le province di **Ancona** e **Pesaro e Urbino**, provocando 13 vittime, 50 feriti, 150 persone sfollate e danni per 2 miliardi di euro.
+## L'alluvione delle Marche del 2022 vista da satellite
+Tra il **15** e **16 settembre 2022**, nella regione **Marche** si verificò un'**alluvione di straordinaria gravità**, che coinvolse in particolar modo le province di **Ancona** e **Pesaro e Urbino**, provocando 13 vittime, 50 feriti, 150 persone sfollate e danni per 2 miliardi di euro.
 
 I centri abitati maggiormente colpiti sono stati Arcevia, Barbara, Cantiano, Frontone, Cagli, Montecarotto, Pergola, Sassoferrato, Castelleone di Suasa, Ostra, Serra Sant'Abbondio, Senigallia e Trecastelli.
 
@@ -11,8 +11,9 @@ In misura minore sono state colpite anche alcune zone dell'Umbria, nella provinc
 
 Il progetto si concentra nella zona di Senigallia e dintorni, dove ingenti danni sono stati provocati dall'esondazione del fiume Mise.
 
-## Dati e metodi
-I dati sono stati ricavati dal [sito di Google Earth Engine](https://earthengine.google.com/), provenienti dalla collezione [Sentinel2](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED?hl=it) della missione Copernicus.
+## Acquisizione delle immagini satellitari 🛰️📡
+### Download immagini ⬇️
+I dati sono stati ricavati dal sito [Google Earth Engine](https://earthengine.google.com/), provenienti dalla missione [ESA Sentinel-2](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED?hl=it).
 
 L'intervallo temporale scelto per l'aquisizione delle immagini va dal:
 - **20 agosto 2022 al 10 settembre 2022** per la situazione pre-evento
@@ -21,6 +22,8 @@ L'intervallo temporale scelto per l'aquisizione delle immagini va dal:
 Si ottengono quindi due immagini mediane (pre e post evento) con incluse le bande: B2 (blu), B3 (verde), B4 (rosso), B8 (NIR).
 
 Sono stati applicati un filtro immagine per la correzione di nuvolosità (seleziona solo immagini con meno del 40% di copertura nuvolosa) e un filtro pixel con la funzione maskS2clouds (usa la banda QA60 per mascherare pixel singoli coperti da nuvole o cirri) al fine di ottenere immagini il più possibile libere da nuvole.
+
+A seguire il codice in JavaScript utilizzato 
 
 Il progetto analizza l’alluvione usando immagini telerilevate  prima e dopo l’evento nell'area di interesse, al fine di:
 - Individuare le aree allagate dopo l'alluvione (indice NDWI per evidenziare la presenza di acqua)
