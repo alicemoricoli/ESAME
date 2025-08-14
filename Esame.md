@@ -32,13 +32,17 @@ Il progetto analizza l’alluvione usando immagini telerilevate  prima e dopo l�
 
 ## Pacchetti utilizzati in R
 ``` r
-library(terra) #pacchetto per l'utilizzo della funzione rast() per SpatRaster
+library(terra) #questo comando carica la libreria terra in R
 library(imageRy) #pacchetto per la visualizzazione plot delle immagini; e le funzioni im.dvi() e im.ndvi()
 library(viridis)  #pacchetto che permette di creare plot di immagini con differenti palette di colori di viridis
 library(ggridges) #pacchetto che permette di creare i plot ridgeline
 ```
 A seguire i codici in **Javascript** utilizzati su Google Earth Engine per ottenere le collection di immagini:
-``` r
+<details>
+<summary>codici JavaScript (cliccare qui)</summary>
+  
+``` JavaScript
+
 // === AOI: Senigallia, Marche ===
 var aoi = ee.Geometry.Rectangle([13.00, 43.65, 13.20, 43.75]);
 
@@ -113,14 +117,81 @@ Export.image.toDrive({
   crs: 'EPSG:4326',
   maxPixels: 1e10
 });
+
 ```
+</details>
 
 
 ## Impostazione della working directory e importazione dei dati
 setwd("~/Desktop/")
 
 ## Analisi dei dati
->  
+
+Di seguito viene riportato il codice utilizzato in R per l'analisi delle immagini pre e post alluvione.
+
+### Caricamento e preparazione dati
+
+```R
+pre <- rast("C:/Users/User/Desktop/senigallia_pre.tif") #questa funzione viene utilizzata per leggere un file raster e appartiene al pacchetto terra
+post <- rast("C:/Users/User/Desktop/senigallia_post.tif")
+pre #richiamando l'oggeto appena creato ne visualizzo i dettagli
+post
+im.multiframe(1,2) #apro un pannello grafico ancora vuoto, di n° 1 righe e 2 colonne
+plotRGB(pre, r = 3, g = 2, b = 1, stretch = "lin", main = "Pre-evento") #visualizzo l'immagine pre nel pannello grafico
+plotRGB(post, r = 3, g = 2, b = 1, stretch = "lin", main = "Post-evento") #visualizzo l'immagine post nel pannello grafico
+
+```
+### Calcolo degli indici spettrali
+Per analizzare l'alluvione, due indici spettrali sono molto utili:
+
+
+- **NDWI**: individua l’acqua superficiale e aree allagate nelle immagini satellitari (valori positivi)
+
+$` NDWI = \frac{(Green-NIR)}{(Green+NIR)} `$
+
+Entrambi vengono calcolati per le immagini pre e post evento, per poi valutare la loro differenza.
+
+#### NDVI: Normalized Difference Vegetation Index
+
+L'**NDVI** è un indice che misura lo stato di salute della vegetazione usando le bande NIR (B8) e Red (B4).  I valori restituiti vengono normalizzati tra -1 e +1.
+- NDVI vicino a +1--> vegetazione sana
+- NDVI vicino a 0 o negativo--> suoli nudi, urbanizzati, danneggiati o sommersi da acqua
+
+$` NDVI = \frac{(NIR - Red)}{(NIR + Red)} `$
+```R
+ndvi_pre  <- (pre[[4]] - pre[[3]]) / (pre[[4]] + pre[[3]])
+ndvi_post <- (post[[4]] - post[[3]]) / (post[[4]] + post[[3]])
+im.multiframe(1,2)
+plot(ndvi_pre)
+plot(ndvi_post)
+im.multiframe(1,2) #in questo modo metto a confronto i valori di NDVI calcolati prima e dopo l'evento alluvionale
+plot(ndvi_pre)
+plot(ndvi_post)
+ndvi_diff <- ndvi_post - ndvi_pre #calcolo la differenza nei valori di NDVI pre e post evento
+plot(ndvi_diff) #un calo indica un danno nella vegetazione. Ci permette di capire dove la vegetazione è stata spazzata via
+
+```
+#### Normalized Difference Water Index 
+
+```R
+ndwi_pre  <- (pre[[2]] - pre[[4]]) / (pre[[2]] + pre[[4]])
+ndwi_post <- (post[[2]] - post[[4]]) / (post[[2]] + post[[4]])
+im.multiframe(1,2) #in questo modo metto a confronto i valori di NDWI calcolati prima e dopo l'evento alluvionale
+plot(ndwi_pre)
+plot(ndwi_post)
+ndwi_diff <- ndwi_post - ndwi_pre #calcolo la differenza nei valori di NDVI pre e post evento
+plot(ndwi_diff) #un aumento indica la presenza di acqua post-evento
+```
+
+#### Analisi combinata: NDVI e NDWI
+L'obiettivo è valutare le aree che maggiormente hanno subito danni a seguito dell'alluvione, integrando le informazioni provenienti dai due indici spettrali: NDVI e NDWI.
+
+```R
+
+```
+
+
+
 ## Risultati
 grafici
 
