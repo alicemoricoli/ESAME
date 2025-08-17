@@ -2,128 +2,275 @@
 > ## ALICE MORICOLI
 >> ### matricola: 1178441
 
-## L'alluvione delle Marche del 2022 vista da satellite
-Tra il **15** e **16 settembre 2022**, nella regione **Marche** si verificò un'**alluvione di straordinaria gravità**, che coinvolse in particolar modo le province di **Ancona** e **Pesaro e Urbino**, provocando 13 vittime, 50 feriti, 150 persone sfollate e danni per 2 miliardi di euro.
+# Incendio sul San Bartolo: valutazione dell'impatto da immagini satellitari
 
-I centri abitati maggiormente colpiti sono stati Arcevia, Barbara, Cantiano, Frontone, Cagli, Montecarotto, Pergola, Sassoferrato, Castelleone di Suasa, Ostra, Serra Sant'Abbondio, Senigallia e Trecastelli.
+## Indice 📑
+1. Introduzione e obiettivi dello studio
+2. Acquisizione delle immagini satellitari 
+3. Analisi delle immagini
+4. Indici spettrali
+5. Analisi multitemporale
+6. Risultati e conclusioni
 
-In misura minore sono state colpite anche alcune zone dell'Umbria, nella provincia di Perugia, come Gubbio, Pietralunga, Scheggia e Pascelupo e Umbertide.
 
-Il progetto si concentra nella zona di Senigallia e dintorni, dove ingenti danni sono stati provocati dall'esondazione del fiume Mise.
+## 1. Introduzione e obiettivi dello studio ✔️
+Tra il **4** e **5 agosto 2017**, il **Parco Naturale del Monte San Bartolo** è stato interessato dsa un vasto **incendio**, che coinvolse tutta la falesia bruciando più di 150 ettari del parco a picco sul mare, distruggendo boschi, campi e case e arrivando a minacciare i borghi di **Fiorenzuola di Focara** e **Casteldimezzo**.
+Per valutare gli impatti ambientali dell'incendio sono state utilizzate delle immagini satellitari relative all'area compresa tra Fiorenzuola e Casteldimezzo.
 
-## Acquisizione delle immagini satellitari 🛰️📡
-### Download immagini ⬇️
+In particolare, per valutare i cambiamenti pre e post impatto, sono stati scelti i seguenti intervalli temporali per l'aquisizione delle immagini:
+- **1 luglio 2017 al 1 agosto 2017** per la situazione pre-evento
+- **10 agosto 2017 al 1 settembre 2017** per la situazione post- evento.
+
+## 2. Acquisizione delle immagini satellitari 🛰️
 I dati sono stati ricavati dal sito [Google Earth Engine](https://earthengine.google.com/), provenienti dalla missione [ESA Sentinel-2](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED?hl=it).
 
-L'intervallo temporale scelto per l'aquisizione delle immagini va dal:
-- **20 agosto 2022 al 10 settembre 2022** per la situazione pre-evento
-- **20 settembre 2022 al 10 ottobre 2022** per la situazione post- evento.
-
-Si ottengono quindi due immagini mediane (pre e post evento) con incluse le bande: B2 (blu), B3 (verde), B4 (rosso), B8 (NIR).
-
-Sono stati applicati un filtro immagine per la correzione di nuvolosità (seleziona solo immagini con meno del 40% di copertura nuvolosa) e un filtro pixel con la funzione maskS2clouds (usa la banda QA60 per mascherare pixel singoli coperti da nuvole o cirri) al fine di ottenere immagini il più possibile libere da nuvole.
-
-A seguire il codice in JavaScript utilizzato 
-
-Il progetto analizza l’alluvione usando immagini telerilevate  prima e dopo l’evento nell'area di interesse, al fine di:
-- Individuare le aree allagate dopo l'alluvione (indice NDWI per evidenziare la presenza di acqua)
-- Individuare cambiamenti vegetazionali (indice NDVI per evidenziare perdita di vegetazione)
-- Determinare e quantificare l’estensione delle aree colpite (combinazione di NDVI e NDWI)
-
-## Pacchetti utilizzati in R
-``` r
-library(terra) #questo comando carica la libreria terra in R
-library(imageRy) #pacchetto per la visualizzazione plot delle immagini; e le funzioni im.dvi() e im.ndvi()
-library(viridis)  #pacchetto che permette di creare plot di immagini con differenti palette di colori di viridis
-library(ggridges) #pacchetto che permette di creare i plot ridgeline
-```
-A seguire i codici in **Javascript** utilizzati su Google Earth Engine per ottenere le collection di immagini:
+Per ottenere le immagini dell'area di interesse **prima** dell'incendio è stato utilizzato il seguente codice in **Javascript**:
 <details>
 <summary>codici JavaScript (cliccare qui)</summary>
   
 ``` JavaScript
+var aoi = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[12.803180046205446,43.94852282252429],
+        [12.829701728944704,43.94852282252429],
+        [12.829701728944704,43.95902703966519],
+        [12.803180046205446,43.95902703966519],
+        [12.803180046205446,43.94852282252429]]], null, false);
+// ==============================================
+// Sentinel-2 Surface Reflectance - Cloud Masking and Visualization
+// https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED
+// ==============================================
 
-// === AOI: Senigallia, Marche ===
-var aoi = ee.Geometry.Rectangle([13.00, 43.65, 13.20, 43.75]);
-
-// === Funzione cloud mask ===
+// ==============================================
+// Function to mask clouds using the QA60 band
+// Bits 10 and 11 correspond to opaque clouds and cirrus
+// ==============================================
 function maskS2clouds(image) {
   var qa = image.select('QA60');
   var cloudBitMask = 1 << 10;
   var cirrusBitMask = 1 << 11;
 
+  // Keep only pixels where both cloud and cirrus bits are 0
   var mask = qa.bitwiseAnd(cloudBitMask).eq(0)
                .and(qa.bitwiseAnd(cirrusBitMask).eq(0));
 
-  // Mantiene solo le bande necessarie e applica la maschera
-  return image.updateMask(mask)
-              .select(['B2','B3','B4','B8'])
-              .divide(10000);
+  // Apply the cloud mask and scale reflectance values (0–10000 ➝ 0–1)
+  return image.updateMask(mask).divide(10000);
 }
 
-// === Date pre e post evento ===
-var preStart  = '2022-08-20';
-var preEnd    = '2022-09-10';
-var postStart = '2022-09-20';
-var postEnd   = '2022-10-10';
+// ==============================================
+// Load and Prepare the Image Collection
+// ==============================================
 
-// === Collezione pre-evento ===
-var preCol = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
-                .filterDate(preStart, preEnd)
-                .filterBounds(aoi)
-                .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 40))
-                .map(maskS2clouds);
+// Load Sentinel-2 SR Harmonized collection (atmospherical correction already done)
+var collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+                   .filterDate('2017-07-01', '2017-08-01')              // Filter by date
+                   .filterBounds(aoi)                                   // Filter by AOI
+                   .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20)) // Only images with <20% cloud cover
+                   .map(maskS2clouds) // Apply cloud masking
+                  .select(['B2', 'B3', 'B4', 'B8']);  // Blu, Verde, Rosso, NIR
 
-// === Collezione post-evento ===
-var postCol = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
-                .filterDate(postStart, postEnd)
-                .filterBounds(aoi)
-                .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 40))
-                .map(maskS2clouds);
+// Print number of images available after filtering
+print('Number of images in collection:', collection.size());
 
-// === Conta immagini disponibili ===
-print('Pre-evento count:', preCol.size());
-print('Post-evento count:', postCol.size());
+// ==============================================
+// Create a median composite from the collection
+// Useful when the AOI overlaps multiple scenes or frequent cloud cover
+// ==============================================
+var composite = collection.median().clip(aoi);
 
-// === Compositi mediani ===
-var preMedian  = preCol.median().clip(aoi);
-var postMedian = postCol.median().clip(aoi);
+// ==============================================
+// Visualization on the Map
+// ==============================================
 
-// === Visualizza in RGB ===
-Map.centerObject(aoi, 12);
-Map.addLayer(preMedian,  {bands: ['B4','B3','B2'], min: 0, max: 0.3}, 'Pre-evento RGB');
-Map.addLayer(postMedian, {bands: ['B4','B3','B2'], min: 0, max: 0.3}, 'Post-evento RGB');
+Map.centerObject(aoi, 10); // Zoom to the AOI
 
-// === Export pre-evento ===
+// Display the first image of the collection (GEE does this by default)
+Map.addLayer(collection, {
+  bands: ['B4', 'B3', 'B2'],  // True color: Red, Green, Blue
+  min: 0,
+  max: 0.3
+}, 'First image of collection');
+
+// Display the median composite image
+Map.addLayer(composite, {
+  bands: ['B4', 'B3', 'B2'],
+  min: 0,
+  max: 0.3
+}, 'Median composite');
+
+// ==============================================
+// Export to Google Drive
+// ==============================================
+
+// Export the median composite
 Export.image.toDrive({
-  image: preMedian,
-  description: 'Senigallia_Pre_Bands',
-  folder: 'GEE_exports',
-  fileNamePrefix: 'senigallia_pre',
+  image: composite.select(['B4', 'B3', 'B2']),  // Select RGB bands
+  description: 'Sentinel2_Median_Composite',
+  folder: 'GEE_exports',                        // Folder in Google Drive
+  fileNamePrefix: 'sentinel2_median_2020',
   region: aoi,
-  scale: 10,
+  scale: 10,                                    // Sentinel-2 resolution
   crs: 'EPSG:4326',
-  maxPixels: 1e10
-});
-
-// === Export post-evento ===
-Export.image.toDrive({
-  image: postMedian,
-  description: 'Senigallia_Post_Bands',
-  folder: 'GEE_exports',
-  fileNamePrefix: 'senigallia_post',
-  region: aoi,
-  scale: 10,
-  crs: 'EPSG:4326',
-  maxPixels: 1e10
+  maxPixels: 1e13
 });
 
 ```
 </details>
 
+In maniera analoga è stato utilizzato il seguente codice per l'acquisizione dell'immagine **post** incendio:
+<details>
+<summary>codici JavaScript (cliccare qui)</summary>
+  
+``` JavaScript
+var aoi = 
+    /* color: #d63000 */
+    /* shown: false */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[12.803180046205446,43.94852282252429],
+        [12.829701728944704,43.94852282252429],
+        [12.829701728944704,43.95902703966519],
+        [12.803180046205446,43.95902703966519],
+        [12.803180046205446,43.94852282252429]]], null, false);
+// ==============================================
+// Sentinel-2 Surface Reflectance - Cloud Masking and Visualization
+// https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED
+// ==============================================
 
-## Impostazione della working directory e importazione dei dati
-setwd("~/Desktop/")
+// ==============================================
+// Function to mask clouds using the QA60 band
+// Bits 10 and 11 correspond to opaque clouds and cirrus
+// ==============================================
+function maskS2clouds(image) {
+  var qa = image.select('QA60');
+  var cloudBitMask = 1 << 10;
+  var cirrusBitMask = 1 << 11;
+
+  // Keep only pixels where both cloud and cirrus bits are 0
+  var mask = qa.bitwiseAnd(cloudBitMask).eq(0)
+               .and(qa.bitwiseAnd(cirrusBitMask).eq(0));
+
+  // Apply the cloud mask and scale reflectance values (0–10000 ➝ 0–1)
+  return image.updateMask(mask).divide(10000);
+}
+
+// ==============================================
+// Load and Prepare the Image Collection
+// ==============================================
+
+// Load Sentinel-2 SR Harmonized collection (atmospherical correction already done)
+var collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+                   .filterDate('2017-08-10', '2017-09-01')              // Filter by date
+                   .filterBounds(aoi)                                   // Filter by AOI
+                   .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20)) // Only images with <20% cloud cover
+                   .map(maskS2clouds) // Apply cloud masking
+                  .select(['B2', 'B3', 'B4', 'B8']);  // Blu, Verde, Rosso, NIR
+
+// Print number of images available after filtering
+print('Number of images in collection:', collection.size());
+
+// ==============================================
+// Create a median composite from the collection
+// Useful when the AOI overlaps multiple scenes or frequent cloud cover
+// ==============================================
+var composite = collection.median().clip(aoi);
+
+// ==============================================
+// Visualization on the Map
+// ==============================================
+
+Map.centerObject(aoi, 10); // Zoom to the AOI
+
+// Display the first image of the collection (GEE does this by default)
+Map.addLayer(collection, {
+  bands: ['B4', 'B3', 'B2'],  // True color: Red, Green, Blue
+  min: 0,
+  max: 0.3
+}, 'First image of collection');
+
+// Display the median composite image
+Map.addLayer(composite, {
+  bands: ['B4', 'B3', 'B2'],
+  min: 0,
+  max: 0.3
+}, 'Median composite');
+
+// ==============================================
+// Export to Google Drive
+// ==============================================
+
+// Export the median composite
+Export.image.toDrive({
+  image: composite.select(['B4', 'B3', 'B2']),  // Select RGB bands
+  description: 'Sentinel2_Median_Composite',
+  folder: 'GEE_exports',                        // Folder in Google Drive
+  fileNamePrefix: 'sentinel2_median_2020',
+  region: aoi,
+  scale: 10,                                    // Sentinel-2 resolution
+  crs: 'EPSG:4326',
+  maxPixels: 1e13
+});
+
+```
+</details>
+
+In entrambi i codici:
+- si definisce un **poligono** con le coordinate nell'area di interesse (aoi);
+- si defisce l'intervallo temporale desiderato;
+- si "pulisono" le immaginicon la funzione **mask2clouds** di mascheramento delle nubi, escludendo i pixel in cui soon presenti nuvole o cirri (la banda QA60 di Sentinel-2 contiene informazioni sulla qualità dei pixel);
+- si selezionano solo immagini con **<20% nuvolosità**;
+- si mantengono solo le bande necessarie: **Blu, Verde, Rosso, NIR**;
+- si crea un **composito mediano**, ossia una collezione di immagini in cui ciascun pixel rappresenta il valore mediano di tutti i pixel delle immagini disponibili nel periodo scelto. Questo riduce ulteriormente la presenza di nuvole o outlier.
+- si salva l’immagine composita in **Google Drive**, dentro la cartella GEE_exports
+  
+  
+## Analisi delle immagini 🖼️
+Una volta ottenute le immagini satellitari, queste sono state importate su R per poter fare un'analisi dettagliata.
+Per farlo, sono stati installati e richiamati in R i seguenti pacchetti:
+``` r
+library(terra) #pacchetto utilizzato per l'analisi di dati spaziali con dati vettoriali e raster 
+library(imageRy) #pacchetto per la visualizzazione e manipolazione delle immagini raster 
+library(viridis) #pacchetto per creare immagini con differenti palette di colori
+library(ggridges) #pacchetto per la creazione di plot ridgeline
+library(ggplot2) #pacchetto per la creazione di grafici a barre
+library(patchwork) #pacchetto per l'unione dei grafici creati con ggplot2
+```
+Per prima cosa è stata impostata la working directory e poi sono state importate e visualizzate le immagini. 
+
+``` r
+setwd("~/Desktop/") # in questo caso le immagini scaricate da GEE sono salvate sul Desktop
+```
+
+``` r
+pre = rast("fiorenziola_pre.tif") # per importare e nominare l'immagine
+plot(pre) # per visualizzare l'immagine importata
+im.plotRGB(pre, r = 1, g = 2, b = 3, title = "Pre-incendio") #per visualizzare l'immagine a veri colori
+dev.off() #per chiudere il pannello di visualizzazione delle immagini
+```
+
+
+``` r
+post = rast("fiorenzuola_post.tif")
+```
+
+
+``` r
+
+```
+
+
 
 ## Analisi dei dati
 
