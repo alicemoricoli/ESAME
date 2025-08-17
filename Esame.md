@@ -8,7 +8,7 @@
 1. Introduzione e obiettivi dello studio
 2. Acquisizione delle immagini satellitari 
 3. Analisi delle immagini
-4. Indici spettrali
+4. Calcolo degli indici spettrali
 5. Analisi multitemporale
 6. Risultati e conclusioni
 
@@ -112,7 +112,7 @@ Map.addLayer(composite, {
 
 // Export the median composite
 Export.image.toDrive({
-  image: composite.select(['B4', 'B3', 'B2']),  // Select RGB bands
+  image: composite.select(['B4', 'B3', 'B2', 'B8']),  // Select RGB bands
   description: 'Sentinel2_Median_Composite',
   folder: 'GEE_exports',                        // Folder in Google Drive
   fileNamePrefix: 'sentinel2_median_2020',
@@ -213,7 +213,7 @@ Map.addLayer(composite, {
 
 // Export the median composite
 Export.image.toDrive({
-  image: composite.select(['B4', 'B3', 'B2']),  // Select RGB bands
+  image: composite.select(['B4', 'B3', 'B2', 'B8']),  // Select RGB bands
   description: 'Sentinel2_Median_Composite',
   folder: 'GEE_exports',                        // Folder in Google Drive
   fileNamePrefix: 'sentinel2_median_2020',
@@ -236,7 +236,7 @@ In entrambi i codici:
 - si salva l’immagine composita in **Google Drive**, dentro la cartella GEE_exports
   
   
-## Analisi delle immagini 🖼️
+## 3. Importazione e visualizzazione delle immagini 🖼️
 Una volta ottenute le immagini satellitari, queste sono state importate su R per poter fare un'analisi dettagliata.
 Per farlo, sono stati installati e richiamati in R i seguenti pacchetti:
 ``` r
@@ -250,46 +250,66 @@ library(patchwork) #pacchetto per l'unione dei grafici creati con ggplot2
 Per prima cosa è stata impostata la working directory e poi sono state importate e visualizzate le immagini. 
 
 ``` r
-setwd("~/Desktop/") # in questo caso le immagini scaricate da GEE sono salvate sul Desktop
+setwd("C:/Users/User/Desktop") # in questo caso le immagini scaricate da GEE sono salvate sul Desktop
 ```
 
 ``` r
-pre = rast("fiorenziola_pre.tif") # per importare e nominare l'immagine
+pre = rast("pre_incendio.tif") # per importare e nominare l'immagine
 plot(pre) # per visualizzare l'immagine importata
 im.plotRGB(pre, r = 1, g = 2, b = 3, title = "Pre-incendio") #per visualizzare l'immagine a veri colori
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
 ```
+Analogamente per l'immagine post incendio:
+
+``` r
+post = rast("post_incendio.tif") # per importare e nominare l'immagine
+plot(post) # per visualizzare l'immagine importata
+im.plotRGB(post, r = 1, g = 2, b = 3, title = "Post-incendio") #per visualizzare l'immagine a veri colori
+dev.off() #per chiudere il pannello di visualizzazione delle immagini
+```
+
+Per visualizzare le due immagini a confronto:
+
+``` r
+im.multiframe(1,2) #apro un pannello grafico ancora vuoto, di n° 1 righe e n°2 colonne
+im.plotRGB(pre, r = 1, g = 2, b = 3, title = "Pre-incendio")  #visualizzo l'immagine pre nel pannello grafico
+im.plotRGB(post, r = 1, g = 2, b = 3, title = "Post-incendio") #visualizzo l'immagine post nel pannello grafico
+```
+> [!NOTE]
+> *Nella seconda immagine è chiaramente visibile la costa interessata dall'incendio.*
+
+Infine possiamo visualizzare in un pannello multiframe, le 4 bande a confronto:
+
+``` r
+im.multiframe(2,4) #apro un pannello multiframe, ancora vuoto, di n°2 righe e n°4 colonne
+plot(pre[[1]], col = magma(100), main = "Pre - Red") #viene specificata la banda, il colore e il titolo
+plot(pre[[2]], col = magma(100), main = "Pre - Green")
+plot(pre[[3]], col = magma(100), main = "Pre - Blue")
+plot(pre[[4]], col = magma(100), main = "Pre - NIR")
+
+plot(post[[1]], col = magma(100), main = "Post - Red")
+plot(post[[2]], col = magma(100), main = "Post - Green")
+plot(post[[3]], col = magma(100), main = "Post - Blue")
+plot(post[[4]], col = magma(100), main = "Post - NIR")
+dev.off()
+```
+> [!NOTE]
+> *La banda più informativa in questo caso è il NIR, che mette in evidenza il suolo nudo nell'immagine post-incendio.*
+
+
+## 4. Calcolo degli indici spettrali 📇
+``` r
+
+```
+
 
 
 ``` r
-post = rast("fiorenzuola_post.tif")
-```
-
-
-``` r
 
 ```
 
 
-
-## Analisi dei dati
-
-Di seguito viene riportato il codice utilizzato in R per l'analisi delle immagini pre e post alluvione.
-
-### Caricamento e preparazione dati
-
-```R
-pre <- rast("C:/Users/User/Desktop/senigallia_pre.tif") #questa funzione viene utilizzata per leggere un file raster e appartiene al pacchetto terra
-post <- rast("C:/Users/User/Desktop/senigallia_post.tif")
-pre #richiamando l'oggeto appena creato ne visualizzo i dettagli
-post
-im.multiframe(1,2) #apro un pannello grafico ancora vuoto, di n° 1 righe e 2 colonne
-plotRGB(pre, r = 3, g = 2, b = 1, stretch = "lin", main = "Pre-evento") #visualizzo l'immagine pre nel pannello grafico
-plotRGB(post, r = 3, g = 2, b = 1, stretch = "lin", main = "Post-evento") #visualizzo l'immagine post nel pannello grafico
-
-```
-### Calcolo degli indici spettrali
-Per analizzare l'alluvione, due indici spettrali sono molto utili:
+Per analizzare l'impatto dell'incendio, due indici spettrali sono molto utili:
 
 
 - **NDWI**: individua l’acqua superficiale e aree allagate nelle immagini satellitari (valori positivi)
