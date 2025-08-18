@@ -298,8 +298,47 @@ dev.off()
 
 
 ## 4. Calcolo degli indici spettrali 📇
-``` r
+Per valutare l'impatto dell'incendio sono stati calcolati gli indici **DVI** e **NDVI** per l'analisi della vegetazione.
+Il **DVI** (Difference Vegetation Index) misura la **densità e la biomassa della vegetazione**. Più è alto il valore del DVI, più abbondante è la vegetazione.
+Si calcola come:
 
+$` DVI = (NIR - Red)`$
+
+L'**NDVI** (Normalized Difference Vegetation Index) invece è un indice che misura lo stato di **salute della vegetazione** anch'esso utilizzando le bande NIR (B8) e Red (B4) ma restituisce valori normalizzati tra -1 e +1: 
+- NDVI vicino a +1--> vegetazione sana
+- NDVI vicino a 0 o negativo--> suoli nudi, urbanizzati, danneggiati o sommersi da acqua
+- 0.3<NDVI<0.6--> praterie, arbusteti o colture agricole in fase di crescita
+- 0.6<NDVI<0.9--> foreste dense e rigogliose
+
+Si calcola come:
+
+$` NDVI = \frac{(NIR - Red)}{(NIR + Red)} `$
+
+Per velocizzare il calcolo degli indici in R sono state usate le funzioni provenienti dal pacchetto imageRy.
+
+#### DVI: Difference Vegetation Index
+
+Per l'immagine **pre incendio**:
+
+``` r
+DVIpre = im.dvi(pre, 4, 1)  #per calcolare il DVI (immagine, banda NIR, banda R)
+plot(DVIpre, stretch = "lin", main = "DVI-pre", col=inferno(100))  #per visualizzare graficamente il risultato, si specificano titolo e colore
+dev.off()
+```
+Analogamente per l'immagine **post incendio**:
+
+``` r
+DVIpost = im.dvi(post, 4, 1) per calcolare il DVI (immagine, banda NIR, banda R)
+plot(DVIpost, stretch = "lin", main = "NDVI-post", col=inferno(100)) #per visualizzare graficamente il risultato, si specificano titolo e colore
+dev.off()
+```
+Ora per confrontare graficamente i risultati creiamo un pannello multiframe:
+
+``` r
+im.multiframe(1,2)  #per creare pannello multiframe con il DVI pre e post incendio
+plot(DVIpre, stretch = "lin", main = "DVI-pre", col=inferno(100))  
+plot(DVIpost, stretch = "lin", main = "DVI-post", col=inferno(100))
+dev.off()
 ```
 
 
@@ -307,24 +346,15 @@ dev.off()
 ``` r
 
 ```
+#### NDVI: Normalized Difference Vegetation Index
 
 
-Per analizzare l'impatto dell'incendio, due indici spettrali sono molto utili:
 
-
-- **NDWI**: individua l’acqua superficiale e aree allagate nelle immagini satellitari (valori positivi)
-
-$` NDWI = \frac{(Green-NIR)}{(Green+NIR)} `$
 
 Entrambi vengono calcolati per le immagini pre e post evento, per poi valutare la loro differenza.
 
-#### NDVI: Normalized Difference Vegetation Index
 
-L'**NDVI** è un indice che misura lo stato di salute della vegetazione usando le bande NIR (B8) e Red (B4).  I valori restituiti vengono normalizzati tra -1 e +1.
-- NDVI vicino a +1--> vegetazione sana
-- NDVI vicino a 0 o negativo--> suoli nudi, urbanizzati, danneggiati o sommersi da acqua
 
-$` NDVI = \frac{(NIR - Red)}{(NIR + Red)} `$
 ```R
 ndvi_pre  <- (pre[[4]] - pre[[3]]) / (pre[[4]] + pre[[3]])
 ndvi_post <- (post[[4]] - post[[3]]) / (post[[4]] + post[[3]])
@@ -338,20 +368,12 @@ ndvi_diff <- ndvi_post - ndvi_pre #calcolo la differenza nei valori di NDVI pre 
 plot(ndvi_diff) #un calo indica un danno nella vegetazione. Ci permette di capire dove la vegetazione è stata spazzata via
 
 ```
-#### Normalized Difference Water Index 
+
 
 ```R
-ndwi_pre  <- (pre[[2]] - pre[[4]]) / (pre[[2]] + pre[[4]])
-ndwi_post <- (post[[2]] - post[[4]]) / (post[[2]] + post[[4]])
-im.multiframe(1,2) #in questo modo metto a confronto i valori di NDWI calcolati prima e dopo l'evento alluvionale
-plot(ndwi_pre)
-plot(ndwi_post)
-ndwi_diff <- ndwi_post - ndwi_pre #calcolo la differenza nei valori di NDVI pre e post evento
-plot(ndwi_diff) #un aumento indica la presenza di acqua post-evento
+
 ```
 
-#### Analisi combinata: NDVI e NDWI
-L'obiettivo è valutare le aree che maggiormente hanno subito danni a seguito dell'alluvione, integrando le informazioni provenienti dai due indici spettrali: NDVI e NDWI.
 
 ```R
 
@@ -359,7 +381,6 @@ L'obiettivo è valutare le aree che maggiormente hanno subito danni a seguito de
 
 
 
-## Risultati
+## Risultati e conclusioni
 grafici
 
-## Conclusioni
