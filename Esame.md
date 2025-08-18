@@ -391,14 +391,21 @@ dev.off()
 > [!NOTE]
 > *La zona interessata dall'incendio risulta evidente soprattutto se si visualizza la differenza nei valori di NDVI.*
 
-Per visualizzare graficamente la frequenza dei pixel di ogni immagine per ciascun valore di NDVI è stata poi fatta un'analisi ridgeline dei valori di NDVI nel pre e nel post incendio. Questa permette appunto di creare due curve di distribuzione con cui diventa possibile osservare eventuali variazioni nel tempo della frequenza di NDVI.
+Per visualizzare graficamente la frequenza dei pixel di ogni immagine per ciascun valore di NDVI è stata poi fatta un'**analisi ridgeline** dei valori di NDVI nel pre e nel post incendio. Questa permette di creare due curve di distribuzione con cui diventa possibile osservare eventuali variazioni nel tempo della frequenza di NDVI.
 
 ```R
+incendio = c(NDVIpre, NDVIpost)  #per creare vettore che ha come elementi le due immagini NDVI
+names(incendio) =c("NDVI_pre", "NDVI_post")  #per creare vettore con i nomi relativi alle immagini
 
+im.ridgeline(incendio, scale=1, palette="viridis")  #per creare grafico ridgelines 
+dev.off()
 ```
+> [!NOTE]
+> *Il grafico ridgeline mostra la distribuzione dei valori di NDVI. Prima dell'incendio si ha un picco di valori di NDVI >0.75. Successivamente all'incendio invece aumentano i valori di NDVI più bassi (intorno a 0.25 e -0.25) e ciò conferma l'impatto dell'incendio sulla vegetazione.*
+
+Per visualizzare la variazione percentuale di NDVI nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto ggplot2. Questo permette di suddividere tutti i pixel di ciascuna immagine in due classi a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione sana) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
 
 
-
-## Risultati e conclusioni
+## 6. Risultati e conclusioni
 grafici
 
