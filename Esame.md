@@ -452,7 +452,16 @@ table #per visualizzare il dataframe
 1 elevato 67.58 44.39
 2 basso   32.42 55.61
 
+ggplotpreincendio = ggplot(table, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))  #per creare ggplot con i valori di NDVI ottenuti 
+ggplotpostincendio = ggplot(table, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
+dev.off()
 ```
+> [!NOTE]
+> *Questo grafico a barre permette di vedere come nell'immagine pre i valori di NDVI siano maggiormente elevati, mentre nell'immagine post la situazione è inversa, con più valori di NDVI bassi rispetto a quelli elevati. Questo conferma l'impatto dell'incendio sulla vegetazione.*
+
+Per valutare quale sia stata la rispesa dell'area finora, si è scelto di confrontare la situazione attuale con quella pre e post incendio, per capire se la vegetazione sia tornata ai livelli pre-incendio.
+
 
 ## 6. Risultati e conclusioni
 grafici
