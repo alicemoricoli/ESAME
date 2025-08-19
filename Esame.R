@@ -95,5 +95,38 @@ names(incendio) =c("NDVI_pre", "NDVI_post")  #per creare vettore con i nomi rela
 im.ridgeline(incendio, scale=1, palette="viridis")  #per creare grafico ridgelines 
 dev.off()
 
+soglia = 0.3  #definisce la soglia per distinguere le due classi: se NDVI>0.3 si ha vegetazione elevata, se NDVI<0.3 si ha vegetazione scarsa o assente
+
+classi_pre = classify(NDVIpre, rcl = matrix(c(-Inf, soglia, 0, soglia, Inf, 1), ncol = 3, byrow = TRUE)) #effettua una classificazione dei valori NDVI contenuti nel raster NDVIpre (immagine pre-incendio). La funzione classify della libreria terra permette di trasformare i valori di un raster secondo regole definite dall'utente: Classe 0: NDVI ≤ 0.3 (assenza o bassa vegetazione); Classe 1: NDVI > 0.3 (presenza di vegetazione).
+plot(classi_pre, col = c("brown", "green")) #per visualizzare la classificazione
+
+classi_post = classify(NDVIpost, rcl = matrix(c(-Inf, soglia, 0, soglia, Inf, 1), ncol = 3, byrow = TRUE)) #effettua una classificazione dei valori NDVI contenuti nel raster NDVIpost (immagine post-incendio). La funzione classify della libreria terra permette di trasformare i valori di un raster secondo regole definite dall'utente: Classe 0: NDVI ≤ 0.3 (assenza o bassa vegetazione); Classe 1: NDVI > 0.3 (presenza di vegetazione).
+plot(classi_post, col = c("brown", "green")) #per visualizzare la classificazione
+
+im.multiframe(1,3)
+plot(classi_pre, main = "Pixel NDVI pre-incendio")
+plot(classi_post, main = "Pixel NDVI post-incendio")
+plot(classi_pre - classi_post, main = "Differenza NDVI pre e post incendio")
+dev.off()
+
+perc_pre = freq(classi_pre) * 100 / ncell(classi_pre)  #per calcolare la frequenza percentuale di ciascuna classe
+perc_pre  #per visualizzare la frequenza percentuale
+
+perc_post = freq(classi_post) * 100 / ncell(classi_post)  #per calcolare la frequenza percentuale di ciascuna classe
+perc_post  #per visualizzare la frequenza percentuale
+
+
+NDVI = c("elevato", "basso") #per creare un vettore con i nomi delle due classi
+pre = c(67.58, 32.42)  #per creare un vettore con le percentuali pre incendio
+post = c(44.39, 55.61)  #per creare un vettore con le percentuali post incendio
+table = data.frame(NDVI, pre, post)  #per creare un dataframe con i valori di NDVI pre e post
+table #per visualizzare il dataframe
+
+ggplotpreincendio = ggplot(table, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))  #per creare ggplot con i valori di NDVI ottenuti 
+ggplotpostincendio = ggplot(table, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
+dev.off()
+
+
 
 
