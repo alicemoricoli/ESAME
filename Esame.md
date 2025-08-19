@@ -403,8 +403,56 @@ dev.off()
 > [!NOTE]
 > *Il grafico ridgeline mostra la distribuzione dei valori di NDVI. Prima dell'incendio si ha un picco di valori di NDVI >0.75. Successivamente all'incendio invece aumentano i valori di NDVI più bassi (intorno a 0.25 e -0.25) e ciò conferma l'impatto dell'incendio sulla vegetazione.*
 
-Per visualizzare la variazione percentuale di NDVI nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto ggplot2. Questo permette di suddividere tutti i pixel di ciascuna immagine in due classi a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione sana) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
+Per visualizzare la variazione percentuale di NDVI nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto **ggplot2**. Questo permette di suddividere tutti i pixel di ciascuna immagine in due classi a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione sana) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
 
+```R
+soglia = 0.3  #definisce la soglia per distinguere le due classi: se NDVI>0.3 si ha vegetazione elevata, se NDVI<0.3 si ha vegetazione scarsa o assente
+
+classi_pre = classify(NDVIpre, rcl = matrix(c(-Inf, soglia, 0, soglia, Inf, 1), ncol = 3, byrow = TRUE)) #effettua una classificazione dei valori NDVI contenuti nel raster NDVIpre (immagine pre-incendio). La funzione classify della libreria terra permette di trasformare i valori di un raster secondo regole definite dall'utente: Classe 0: NDVI ≤ 0.3 (assenza o bassa vegetazione); Classe 1: NDVI > 0.3 (presenza di vegetazione).
+
+plot(classi_pre, col = c("brown", "green")) #per visualizzare la classificazione
+
+classi_post = classify(NDVIpost, rcl = matrix(c(-Inf, soglia, 0, soglia, Inf, 1), ncol = 3, byrow = TRUE)) #effettua una classificazione dei valori NDVI contenuti nel raster NDVIpost (immagine post-incendio). La funzione classify della libreria terra permette di trasformare i valori di un raster secondo regole definite dall'utente: Classe 0: NDVI ≤ 0.3 (assenza o bassa vegetazione); Classe 1: NDVI > 0.3 (presenza di vegetazione).
+
+plot(classi_post, col = c("brown", "green")) #per visualizzare la classificazione
+
+im.multiframe(1,3)
+plot(classi_pre, main = "Pixel NDVI pre-incendio")
+plot(classi_post, main = "Pixel NDVI post-incendio")
+plot(classi_pre - classi_post, main = "Differenza NDVI pre e post incendio")
+dev.off()
+```
+> [!NOTE]
+> *I pixel vengono distinti in due classi: 1 vegetazione sana; 0 vegetazione assente o scarsa. Si nota come nell'immagine post-incendio i pixel relativi al tratto bruciato vengano riclassificati nella classe 0. Di conseguenza, visualizzando la differenza tra i due plot, in giallo (classe 1), si distingue la zona bruciata*
+
+Visualizziamo ora questo risultato con un **grafico a barre**.
+
+```R
+perc_pre = freq(classi_pre) * 100 / ncell(classi_pre)  #per calcolare la frequenza percentuale di ciascuna classe
+perc_pre  #per visualizzare la frequenza percentuale
+
+ layer       value    count
+1 0.002863033 0.000000000 32.41525
+2 0.002863033 0.002863033 67.58475
+
+perc_post = freq(classi_post) * 100 / ncell(classi_post)  #per calcolare la frequenza percentuale di ciascuna classe
+perc_post  #per visualizzare la frequenza percentuale
+
+  layer       value    count
+1 0.002863033 0.000000000 55.60582
+2 0.002863033 0.002863033 44.39418
+
+NDVI = c("elevato", "basso") #per creare un vettore con i nomi delle due classi
+pre = c(67.58, 32.42)  #per creare un vettore con le percentuali pre incendio
+post = c(44.39, 55.61)  #per creare un vettore con le percentuali post incendio
+table = data.frame(NDVI, pre, post)  #per creare un dataframe con i valori di NDVI pre e post
+table #per visualizzare il dataframe
+
+ NDVI     pre  post
+1 elevato 67.58 44.39
+2 basso   32.42 55.61
+
+```
 
 ## 6. Risultati e conclusioni
 grafici
