@@ -598,4 +598,6 @@ Ad ogni modo potrebbe trattarsi di una risposta temporanea, perciò andrebbero a
 <p align="center">
   <img src="https:// alt="image" width="1000">
 </p>
+
+
 ## Grazie per l'attenzione! 
