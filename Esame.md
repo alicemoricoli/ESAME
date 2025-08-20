@@ -375,7 +375,7 @@ plot(NDVIpost, stretch = "lin", main = "NDVI-post", col=inferno(100))
 dev.off()
 ```
 
-## 5. Analisi multitemporale
+## 5. Analisi multitemporale ⏲️
 
 Un'ulteriore analisi per visualizzare l'impatto dell'incendio è stata fatta calcolando la differenza tra le immagini del prima e del dopo per quanto riguarda la banda del **rosso** e dei valori di **NDVI**.
 
@@ -589,6 +589,13 @@ dev.off()
 > [!NOTE]
 > *Dal grafico è possibile osservare come, a due anni dall'incendio, la vegetazione si sia ripresa, ossia i valori di NDVI sopra il valore soglia sono aumentati e quelli sotto il valore soglia diminuiti. Pare anche che la vegetazione nel 2019 sia addirittura più presente rispetto al 2017 nella situazione pre incendio*
 
-## 6. Risultati e conclusioni
-grafici
+## 6. Risultati e conclusioni ⚓
+L'analisi delle immagini satellitari mostra chiaramente l'impatto dell'incendio sull'area del San Bartolo. 
+Inizialmente gran parte della vegetazione è stata distrutta, riducendone nettamente l’attività fotosintetica. Tuttavia, dopo due anni, l’area ha mostrato una forte capacità di rigenerazione: l’NDVI indica che la vegetazione non solo è tornata ai livelli pre-incendio, ma in alcuni punti li ha addirittura superati. Ciò dimostra l’elevata **resilienza** dell’ecosistema e la sua capacità di adattarsi e riprendersi dopo eventi di disturbo.
+È plausibile che l’incendio abbia favorito la germinazione di specie pioniere e ridotto la competizione, determinando un apparente incremento della vigoria vegetativa rispetto al periodo antecedente il disturbo.
+Ad ogni modo potrebbe trattarsi di una risposta temporanea, perciò andrebbero analizzati i valori di NDVI nel lungo tempo per capire se l'area si sia davvero ripristinata o se un possibile intervento possa risultare utile. 
 
+<p align="center">
+  <img src="https:// alt="image" width="1000">
+</p>
+## Grazie per l'attenzione! 
