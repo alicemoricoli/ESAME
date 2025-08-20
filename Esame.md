@@ -558,16 +558,37 @@ Export.image.toDrive({
   crs: 'EPSG:4326',
   maxPixels: 1e13
 });
-
 ```
+</details>
+
 Eseguiamo un'analisi analoga per la nuova immagine relativa all'anno 2019.
 
 ```R
 twoyears = rast("2019.tif") # per importare e nominare l'immagine
 plot(twoyears) # per visualizzare l'immagine importata
-im.plotRGB(2019, r = 1, g = 2, b = 3, title = "2 anni dopo") #per visualizzare l'immagine a veri colori
+im.plotRGB(twoyears, r = 1, g = 2, b = 3, title = "2 anni dopo") #per visualizzare l'immagine a veri colori
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
+
+NDVItwoyears = im.ndvi(twoyears, 4, 1)   #per calcolare l'NDVI dopo due anni dall'incendio
+plot(NDVItwoyears, stretch = "lin", main = "NDVIpre", col=inferno(100))  #per visualizzare graficamente il risultato, si specificano titolo e colore 
+dev.off()
+
+classi_twoyears = classify(NDVItwoyears, rcl = matrix(c(-Inf, soglia, 0, soglia, Inf, 1), ncol = 3, byrow = TRUE)) #effettua una classificazione dei valori NDVI contenuti nel raster NDVItwoyears (immagine a due anni dall'incendio). La funzione classify della libreria terra permette di trasformare i valori di un raster secondo regole definite dall'utente: Classe 0: NDVI ≤ 0.3 (assenza o bassa vegetazione); Classe 1: NDVI > 0.3 (presenza di vegetazione).
+
+perc_twoyears = freq(classi_twoyears) * 100 / ncell(classi_twoyears)  #per calcolare la frequenza percentuale di ciascuna classe
+perc_twoyears  #per visualizzare la frequenza percentuale
+
+twoyears = c(72.11 , 27.89)  #per creare un vettore con le percentuali a due anni dall'incendio incendio
+table = data.frame(NDVI, pre, post, twoyears)  #per creare un dataframe con i valori di NDVI pre e post
+table #per visualizzare il dataframe
+
+ggplottwoyears = ggplot(table, aes(x=NDVI, y=twoyears, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpreincendio + ggplotpostincendio + ggplottwoyears + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
+dev.off()
 ```
+> [!NOTE]
+> *Dal grafico è possibile osservare come, a due anni dall'incendio, la vegetazione si sia ripresa, ossia i valori di NDVI sopra il valore soglia sono aumentati e quelli sotto il valore soglia diminuiti. Pare anche che la vegetazione nel 2019 sia addirittura più presente rispetto al 2017 nella situazione pre incendio*
+
 ## 6. Risultati e conclusioni
 grafici
 
