@@ -602,7 +602,7 @@ Inizialmente gran parte della vegetazione è stata distrutta, riducendone nettam
 Ad ogni modo potrebbe trattarsi di una risposta temporanea, perciò andrebbero analizzati i valori di NDVI nel lungo tempo per capire se l'area si sia davvero ripristinata o se un possibile intervento possa risultare utile. 
 
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/foto_post.webp" alt="image" width="1000">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/foto_post.webp" alt="image" width="800">
 </p>
 
 
