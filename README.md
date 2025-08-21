@@ -6,4 +6,4 @@ L'esame è basato su Github e si struttura attraverso una presentazione in  `.md
 L'obiettivo principale è quello di analizzare attraverso gli strumenti del telerilevamento le immagini satellitari scaricate da Google Earth Engine.
 
 ## Area di studio
-La porzione di territorio analizzata è il Parco naturale regionale del Monte San Bartolo, in particolare tra Fiorenzuola di Focara e Casteldimezzo.
+La porzione di territorio analizzata è il **Parco naturale regionale del Monte San Bartolo**, in particolare tra **Fiorenzuola di Focara** e **Casteldimezzo**.
