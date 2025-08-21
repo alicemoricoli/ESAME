@@ -22,7 +22,7 @@ In particolare, per valutare i cambiamenti pre e post impatto, sono stati scelti
 - **10 agosto 2017 al 1 settembre 2017** per la situazione post- evento.
 
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/incendio-sul-san-bartolo-il-giorno-dopo-fotoprint.jpeg" alt="image" width="800">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/incendio-sul-san-bartolo-il-giorno-dopo-fotoprint.jpeg" alt="image" width="600">
 </p>
 
 > Monte San Bartolo il giorno successivo all'incendio
@@ -272,7 +272,7 @@ dev.off() #per chiudere il pannello di visualizzazione delle immagini
 > Immagine pre-incendio nelle 4 bande
 
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.RBG_pre.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.RBG_pre.jpeg" alt="image" width="700">
 </p>
 
 > Immagine pre-incendio a veri colori
@@ -292,7 +292,7 @@ dev.off() #per chiudere il pannello di visualizzazione delle immagini
 > Immagine post-incendio nelle 4 bande
 
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.post-incendio.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.post-incendio.jpeg"alt="image" width="600">
 </p>
 
 > Immagine post-incendio a veri colori
@@ -305,7 +305,7 @@ im.plotRGB(pre, r = 1, g = 2, b = 3, title = "Pre-incendio")  #visualizzo l'imma
 im.plotRGB(post, r = 1, g = 2, b = 3, title = "Post-incendio") #visualizzo l'immagine post nel pannello grafico
 ```
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/3.pre-post-incendio.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/3.pre-post.jpeg"alt="image" width="900">
 </p>
 
 > Immagini pre e post-incendio a veri colori a confronto
@@ -330,7 +330,7 @@ plot(post[[4]], col = magma(100), main = "Post - NIR")
 dev.off()
 ```
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/4.bande-pre-post.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/4.bande-pre-post.jpeg" alt="image" width="1000">
 </p>
 
 > Immagini pre e post-incendio nelle 4 bande a confronto
@@ -494,11 +494,11 @@ plot(classi_post, col = c("brown", "green")) #per visualizzare la classificazion
 im.multiframe(1,3)
 plot(classi_pre, main = "Pixel NDVI pre-incendio")
 plot(classi_post, main = "Pixel NDVI post-incendio")
-plot(classi_pre - classi_post, main = "Differenza NDVI pre e post incendio")
+plot(classi_pre - classi_post, main = "Differenza NDVI pre-post")
 dev.off()
 ```
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/10.ggplot.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/10.ggplot.jpeg"alt="image" width="1000">
 </p>
 
 > Distribuzione dei pixel nelle due classi (1 e 0) nell'immagine pre, post e differenza
@@ -539,7 +539,7 @@ ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (e
 dev.off()
 ```
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/11.ggplotpre-post.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/11.2ggplot.jpeg">
 </p>
 
 > Distribuzione dei pixel nelle due classi (1 e 0) mostrata con grafico a barre
@@ -670,7 +670,7 @@ table = data.frame(NDVI, pre, post, twoyears)  #per creare un dataframe con i va
 table #per visualizzare il dataframe
 
 ggplottwoyears = ggplot(table, aes(x=NDVI, y=twoyears, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
-ggplotpreincendio + ggplotpostincendio + ggplottwoyears + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
+ggplotpreincendio + ggplotpostincendio + ggplottwoyears + plot_annotation(title = "Valori NDVI nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
 dev.off()
 ```
 <p align="center">
