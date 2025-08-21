@@ -268,11 +268,13 @@ dev.off() #per chiudere il pannello di visualizzazione delle immagini
 <p align="center">
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/1.pre-incendio.jpeg">
 </p>
+
 > Immagine pre-incendio nelle 4 bande
 
 <p align="center">
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.RBG_pre.jpeg">
 </p>
+
 > Immagine pre-incendio a veri colori
 
 Analogamente per l'immagine post incendio:
@@ -286,11 +288,13 @@ dev.off() #per chiudere il pannello di visualizzazione delle immagini
 <p align="center">
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.post-incendio.jpg">
 </p>
+
 > Immagine post-incendio nelle 4 bande
 
 <p align="center">
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.post-incendio.jpeg">
 </p>
+
 > Immagine post-incendio a veri colori
 
 Per visualizzare le due immagini a confronto:
@@ -303,7 +307,9 @@ im.plotRGB(post, r = 1, g = 2, b = 3, title = "Post-incendio") #visualizzo l'imm
 <p align="center">
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/3.pre-post-incendio.jpeg">
 </p>
+
 > Immagini pre e post-incendio a veri colori a confronto
+
 
 > [!NOTE]
 > *Nella seconda immagine è chiaramente visibile la costa interessata dall'incendio.*
@@ -326,7 +332,9 @@ dev.off()
 <p align="center">
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/4.bande-pre-post.jpeg">
 </p>
+
 > Immagini pre e post-incendio nelle 4 bande a confronto
+
 
 > [!NOTE]
 > *La banda più informativa in questo caso è il NIR, che mette in evidenza il suolo nudo nell'immagine post-incendio.*
@@ -375,6 +383,13 @@ plot(DVIpre, stretch = "lin", main = "DVI-pre", col=inferno(100))
 plot(DVIpost, stretch = "lin", main = "DVI-post", col=inferno(100))
 dev.off()
 ```
+
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/5.DVIpre-post.jpeg">
+</p>
+
+> Indice DVI pre e post incendio a confronto
+
 > [!NOTE]
 > *Dal confronto tra le due immagini risulta evidente la diminuzione di DVI nel tratto di corsa dell'immagine post-incendio.*
 
@@ -396,6 +411,13 @@ plot(NDVIpre, stretch = "lin", main = "NDVI-pre", col=inferno(100))
 plot(NDVIpost, stretch = "lin", main = "NDVI-post", col=inferno(100))
 dev.off()
 ```
+
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/6.NDVI-pre-post.jpeg">
+</p>
+
+> Indice NDVI pre e post incendio a confronto
+
 > [!NOTE]
 > *Anche in questo caso si nota che in corrispondenza della costa l'immagine post-incendio risulta più scura, ad indicare che i valori di NDVI sono diminuiti e quindi la vegetazione è stata danneggiata dalle fiamme.*
 
@@ -410,6 +432,12 @@ plot(NDVIpost, stretch = "lin", main = "NDVI-post", col=inferno(100))
 dev.off()
 ```
 
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/7.DVI-NDVI-pre-post.jpeg">
+</p>
+
+> Indici DVI e NDVI (pre e post incendio) a confronto
+
 ## 5. Analisi multitemporale ⏲️
 
 Un'ulteriore analisi per visualizzare l'impatto dell'incendio è stata fatta calcolando la differenza tra le immagini del prima e del dopo per quanto riguarda la banda del **rosso** e dei valori di **NDVI**.
@@ -423,6 +451,12 @@ plot(diff_red, main = "Differenza banda del rosso")
 plot(diff_ndvi, main = "Differenza valori NDVI")
 dev.off()
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/8.diff_rosso%2BNDVI.jpeg">
+</p>
+
+> Differenza (pre e post incendio) nella banda del rosso e dei valori NDVI
+
 > [!NOTE]
 > *La zona interessata dall'incendio risulta evidente soprattutto se si visualizza la differenza nei valori di NDVI.*
 
@@ -435,6 +469,12 @@ names(incendio) =c("NDVI_pre", "NDVI_post")  #per creare vettore con i nomi rela
 im.ridgeline(incendio, scale=1, palette="viridis")  #per creare grafico ridgelines 
 dev.off()
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/9.ridgeline.jpeg">
+</p>
+
+> Grafico ridgeline
+
 > [!NOTE]
 > *Il grafico ridgeline mostra la distribuzione dei valori di NDVI. Prima dell'incendio si ha un picco di valori di NDVI >0.75. Successivamente all'incendio invece aumentano i valori di NDVI più bassi (intorno a 0.25 e -0.25) e ciò conferma l'impatto dell'incendio sulla vegetazione.*
 
@@ -457,6 +497,12 @@ plot(classi_post, main = "Pixel NDVI post-incendio")
 plot(classi_pre - classi_post, main = "Differenza NDVI pre e post incendio")
 dev.off()
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/10.ggplot.jpeg">
+</p>
+
+> Distribuzione dei pixel nelle due classi (1 e 0) nell'immagine pre, post e differenza
+
 > [!NOTE]
 > *I pixel vengono distinti in due classi: 1 vegetazione sana; 0 vegetazione assente o scarsa. Si nota come nell'immagine post-incendio i pixel relativi al tratto bruciato vengano riclassificati nella classe 0. Di conseguenza, visualizzando la differenza tra i due plot, in giallo (classe 1), si distingue la zona bruciata*
 
@@ -492,6 +538,12 @@ ggplotpostincendio = ggplot(table, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) +
 ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
 dev.off()
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/11.ggplotpre-post.jpeg">
+</p>
+
+> Distribuzione dei pixel nelle due classi (1 e 0) mostrata con grafico a barre
+
 > [!NOTE]
 > *Questo grafico a barre permette di vedere come nell'immagine pre i valori di NDVI siano maggiormente elevati, mentre nell'immagine post la situazione è inversa, con più valori di NDVI bassi rispetto a quelli elevati. Questo conferma l'impatto dell'incendio sulla vegetazione.*
 
@@ -621,6 +673,12 @@ ggplottwoyears = ggplot(table, aes(x=NDVI, y=twoyears, fill=NDVI, color=NDVI)) +
 ggplotpreincendio + ggplotpostincendio + ggplottwoyears + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
 dev.off()
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/12.ggplottwoyears.jpeg">
+</p>
+
+> Distribuzione dei pixel nelle due classi (1 e 0) nell'immagine pre, post e a due anni dall'incendio (2019)
+
 > [!NOTE]
 > *Dal grafico è possibile osservare come, a due anni dall'incendio, la vegetazione si sia ripresa, ossia i valori di NDVI sopra il valore soglia sono aumentati e quelli sotto il valore soglia diminuiti. Pare anche che la vegetazione nel 2019 sia addirittura più presente rispetto al 2017 nella situazione pre incendio*
 
