@@ -292,7 +292,7 @@ dev.off() #per chiudere il pannello di visualizzazione delle immagini
 > Immagine post-incendio nelle 4 bande
 
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.post-incendio.jpeg"alt="image" width="600">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.post-incendio.jpeg"alt="image" width="700">
 </p>
 
 > Immagine post-incendio a veri colori
@@ -385,7 +385,7 @@ dev.off()
 ```
 
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/5.DVIpre-post.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/5.DVIpre-post.jpeg" alt="image" width="900">
 </p>
 
 > Indice DVI pre e post incendio a confronto
@@ -413,7 +413,7 @@ dev.off()
 ```
 
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/6.NDVI-pre-post.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/6.NDVI-pre-post.jpeg" alt="image" width="900">
 </p>
 
 > Indice NDVI pre e post incendio a confronto
@@ -433,7 +433,7 @@ dev.off()
 ```
 
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/7.DVI-NDVI-pre-post.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/7.DVI-NDVI-pre-post.jpeg" alt="image" width="900">
 </p>
 
 > Indici DVI e NDVI (pre e post incendio) a confronto
@@ -452,7 +452,7 @@ plot(diff_ndvi, main = "Differenza valori NDVI")
 dev.off()
 ```
 <p align="center">
-  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/8.diff_rosso%2BNDVI.jpeg">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/8.diff_rosso%2BNDVI.jpeg" alt="image" width="900">
 </p>
 
 > Differenza (pre e post incendio) nella banda del rosso e dei valori NDVI
@@ -535,7 +535,7 @@ table #per visualizzare il dataframe
 
 ggplotpreincendio = ggplot(table, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))  #per creare ggplot con i valori di NDVI ottenuti 
 ggplotpostincendio = ggplot(table, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
-ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
+ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
 dev.off()
 ```
 <p align="center">
