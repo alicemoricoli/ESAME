@@ -265,6 +265,16 @@ plot(pre) # per visualizzare l'immagine importata
 im.plotRGB(pre, r = 1, g = 2, b = 3, title = "Pre-incendio") #per visualizzare l'immagine a veri colori
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/1.pre-incendio.jpeg">
+</p>
+> Immagine pre-incendio nelle 4 bande
+
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.RBG_pre.jpeg">
+</p>
+> Immagine pre-incendio a veri colori
+
 Analogamente per l'immagine post incendio:
 
 ``` r
@@ -273,6 +283,15 @@ plot(post) # per visualizzare l'immagine importata
 im.plotRGB(post, r = 1, g = 2, b = 3, title = "Post-incendio") #per visualizzare l'immagine a veri colori
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.post-incendio.jpg">
+</p>
+> Immagine post-incendio nelle 4 bande
+
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/2.post-incendio.jpeg">
+</p>
+> Immagine post-incendio a veri colori
 
 Per visualizzare le due immagini a confronto:
 
@@ -281,6 +300,11 @@ im.multiframe(1,2) #apro un pannello grafico ancora vuoto, di n° 1 righe e n°2
 im.plotRGB(pre, r = 1, g = 2, b = 3, title = "Pre-incendio")  #visualizzo l'immagine pre nel pannello grafico
 im.plotRGB(post, r = 1, g = 2, b = 3, title = "Post-incendio") #visualizzo l'immagine post nel pannello grafico
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/3.pre-post-incendio.jpeg">
+</p>
+> Immagini pre e post-incendio a veri colori a confronto
+
 > [!NOTE]
 > *Nella seconda immagine è chiaramente visibile la costa interessata dall'incendio.*
 
@@ -299,6 +323,11 @@ plot(post[[3]], col = magma(100), main = "Post - Blue")
 plot(post[[4]], col = magma(100), main = "Post - NIR")
 dev.off()
 ```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/4.bande-pre-post.jpeg">
+</p>
+> Immagini pre e post-incendio nelle 4 bande a confronto
+
 > [!NOTE]
 > *La banda più informativa in questo caso è il NIR, che mette in evidenza il suolo nudo nell'immagine post-incendio.*
 
