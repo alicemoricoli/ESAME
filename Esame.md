@@ -468,7 +468,7 @@ plot(nbr_pre, main=”NBR pre-incendio”) # visualizzazione NBR pre-incendio
 ```
 
 <p align="center">
-  <img src="" alt="image" width="900">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/nbr_pre.jpeg" alt="image" width="900">
 </p>
 
 ``` r
@@ -476,7 +476,7 @@ nbr_post= (post[[4]]-post[[5]])/ (post[[4]]+post[[5]]) # calcolo NBR post-incend
 plot(nbr_post, main=”NBR post-incendio”) # visualizzazione NBR post-incendio
 ```
 <p align="center">
-  <img src="" alt="image" width="900">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/nbr_post.jpeg" alt="image" width="900">
 </p>
 
 ``` r
@@ -485,11 +485,23 @@ plot(difnbr, main=”Differenza NBR pre e post incendio”) # visualizzazione di
 ```
 
 <p align="center">
-  <img src="" alt="image" width="900">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/difnbr.jpeg" alt="image" width="900">
 </p>
 
 Pre visualizzare tutto in un unico pannello multiframe:
+``` r
+im.multiframe(1,3)
+plot(nbr_pre, main="NBR pre-incendio")
+plot(nbr_post, main="NBR post-incendio")
+plot(difnbr, main="Differenza NBR pre-post")
+dev.off()
+```
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/pannello.jpeg" width="900">
+</p>
 
+> [!NOTE]
+> *Si nota chiaramente in giallo la zona interessata dall'incendio. Valori positivi (Vicini a 1) indicano le aree bruciate.*
   
 ## 5. Analisi multitemporale ⏲️
 
