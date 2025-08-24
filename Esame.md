@@ -438,6 +438,59 @@ dev.off()
 
 > Indici DVI e NDVI (pre e post incendio) a confronto
 
+
+Inoltre, per valutare l'impatto dell'incendio, è stato calcolato l'indice **NBR**, **prima e dopo** l'incendio, e poi la **differenza** tra questi due.
+
+#### NBR: Normalized Bur Ratio
+L'NBR è un indice spettrale progettato per **rilevare, mappare e valutare** gli incendi usando immagini satellitari.
+Si calcola come:
+
+$` NBR = \frac{(NIR - SWIR)}{(NIR + SWIR)} `$
+
+- Valori alti di NBR (vicini a +1) → vegetazione sana e densa (molto NIR, poco SWIR-Short Wawe Infrared)
+
+- Valori bassi o negativi (0 → -1) → aree bruciate o con poca vegetazione (SWIR alto, NIR basso)
+
+Il NBR da solo è utile, ma il vero indicatore di severità è il dNBR (differenced NBR):
+
+$` dNBR=NBRpre−NBRpost `$
+	​
+
+- dNBR alto → forte cambiamento, area bruciata severamente
+
+- dNBR basso o vicino a 0 → poca o nessuna variazione
+
+- dNBR negativo → aumento della vegetazione (es. ricrescita post-incendio)
+
+``` r
+nbr_pre= (pre[[4]]-pre[[5]])/ (pre[[4]]+pre[[5]]) # calcolo NBR pre-incendio
+plot(nbr_pre, main=”NBR pre-incendio”) # visualizzazione NBR pre-incendio
+```
+
+<p align="center">
+  <img src="" alt="image" width="900">
+</p>
+
+``` r
+nbr_post= (post[[4]]-post[[5]])/ (post[[4]]+post[[5]]) # calcolo NBR post-incendio
+plot(nbr_post, main=”NBR post-incendio”) # visualizzazione NBR post-incendio
+```
+<p align="center">
+  <img src="" alt="image" width="900">
+</p>
+
+``` r
+difnbr=nbr_pre-nbr_post # calcolo differenza pre-post incendio dei valori NBR
+plot(difnbr, main=”Differenza NBR pre e post incendio”) # visualizzazione differenza NBR
+```
+
+<p align="center">
+  <img src="" alt="image" width="900">
+</p>
+
+Pre visualizzare tutto in un unico pannello multiframe:
+
+  
 ## 5. Analisi multitemporale ⏲️
 
 Un'ulteriore analisi per visualizzare l'impatto dell'incendio è stata fatta calcolando la differenza tra le immagini del prima e del dopo per quanto riguarda la banda del **rosso** e dei valori di **NDVI**.
