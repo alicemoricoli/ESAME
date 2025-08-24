@@ -81,7 +81,7 @@ var collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
                    .filterBounds(aoi)                                   // Filter by AOI
                    .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20)) // Only images with <20% cloud cover
                    .map(maskS2clouds) // Apply cloud masking
-                  .select(['B2', 'B3', 'B4', 'B8']);  // Blu, Verde, Rosso, NIR
+                  .select(['B2', 'B3', 'B4', 'B8', 'B12']);  // Blu, Verde, Rosso, NIR, SWIR2
 
 // Print number of images available after filtering
 print('Number of images in collection:', collection.size());
@@ -118,7 +118,7 @@ Map.addLayer(composite, {
 
 // Export the median composite
 Export.image.toDrive({
-  image: composite.select(['B4', 'B3', 'B2', 'B8']),  // Select RGB bands
+  image: composite.select(['B4', 'B3', 'B2', 'B8', 'B12']),  // Select RGB bands
   description: 'Sentinel2_Median_Composite',
   folder: 'GEE_exports',                        // Folder in Google Drive
   fileNamePrefix: 'sentinel2_median_2020',
@@ -182,7 +182,7 @@ var collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
                    .filterBounds(aoi)                                   // Filter by AOI
                    .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20)) // Only images with <20% cloud cover
                    .map(maskS2clouds) // Apply cloud masking
-                  .select(['B2', 'B3', 'B4', 'B8']);  // Blu, Verde, Rosso, NIR
+                  .select(['B2', 'B3', 'B4', 'B8', 'B12']);  // Blu, Verde, Rosso, NIR, SWIR2
 
 // Print number of images available after filtering
 print('Number of images in collection:', collection.size());
@@ -219,7 +219,7 @@ Map.addLayer(composite, {
 
 // Export the median composite
 Export.image.toDrive({
-  image: composite.select(['B4', 'B3', 'B2', 'B8']),  // Select RGB bands
+  image: composite.select(['B4', 'B3', 'B2', 'B8', 'B12']),  // Select RGB bands
   description: 'Sentinel2_Median_Composite',
   folder: 'GEE_exports',                        // Folder in Google Drive
   fileNamePrefix: 'sentinel2_median_2020',
@@ -237,7 +237,7 @@ In entrambi i codici:
 - si defisce l'intervallo temporale desiderato;
 - si "pulisono" le immaginicon la funzione **mask2clouds** di mascheramento delle nubi, escludendo i pixel in cui soon presenti nuvole o cirri (la banda QA60 di Sentinel-2 contiene informazioni sulla qualità dei pixel);
 - si selezionano solo immagini con **<20% nuvolosità**;
-- si mantengono solo le bande necessarie: **Blu, Verde, Rosso, NIR**;
+- si mantengono solo le bande necessarie: **Blu, Verde, Rosso, NIR, SWIR2**;
 - si crea un **composito mediano**, ossia una collezione di immagini in cui ciascun pixel rappresenta il valore mediano di tutti i pixel delle immagini disponibili nel periodo scelto. Questo riduce ulteriormente la presenza di nuvole o outlier.
 - si salva l’immagine composita in **Google Drive**, dentro la cartella GEE_exports
   
