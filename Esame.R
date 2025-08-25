@@ -79,6 +79,18 @@ plot(NDVIpre, stretch = "lin", main = "NDVI-pre", col=inferno(100))
 plot(NDVIpost, stretch = "lin", main = "NDVI-post", col=inferno(100))
 dev.off()
 
+nbr_pre= (pre[[4]]-pre[[5]])/ (pre[[4]]+pre[[5]]) # calcolo NBR pre-incendio
+plot(nbr_pre, main=”NBR pre-incendio”) # visualizzazione NBR pre-incendio
+nbr_post= (post[[4]]-post[[5]])/ (post[[4]]+post[[5]]) # calcolo NBR post-incendio
+plot(nbr_post, main=”NBR post-incendio”) # visualizzazione NBR post-incendio
+difnbr=nbr_pre-nbr_post # calcolo differenza pre-post incendio dei valori NBR
+plot(difnbr, main=”Differenza NBR pre e post incendio”) # visualizzazione differenza NBR
+im.multiframe(1,3)
+plot(nbr_pre, main="NBR pre-incendio")
+plot(nbr_post, main="NBR post-incendio")
+plot(difnbr, main="Differenza NBR pre-post")
+dev.off()
+
 # Analisi Multitemporale
 
 diff_red = pre[[1]] - post[[1]]  #per calcolare differenza nella banda del rosso tra pre e post incendio
