@@ -460,10 +460,9 @@ $$
 
 Il NBR da solo è utile, ma il vero indicatore di severità è il dNBR (differenced NBR):
 
-$$
-dNBR = NBR_{pre} - NBR_{post}
-$$
-	​
+<p align="center">
+$dNBR = NBRpre - NBRpost$
+</p>
 
 - dNBR alto → forte cambiamento, area bruciata severamente
 
