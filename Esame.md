@@ -235,7 +235,7 @@ Export.image.toDrive({
 In entrambi i codici:
 - si definisce un **poligono** con le coordinate nell'area di interesse (aoi);
 - si defisce l'intervallo temporale desiderato;
-- si "pulisono" le immaginicon la funzione **mask2clouds** di mascheramento delle nubi, escludendo i pixel in cui soon presenti nuvole o cirri (la banda QA60 di Sentinel-2 contiene informazioni sulla qualità dei pixel);
+- si "pulisono" le immagini con la funzione **mask2clouds** di mascheramento delle nubi, escludendo i pixel in cui soon presenti nuvole o cirri (la banda QA60 di Sentinel-2 contiene informazioni sulla qualità dei pixel);
 - si selezionano solo immagini con **<20% nuvolosità**;
 - si mantengono solo le bande necessarie: **Blu, Verde, Rosso, NIR, SWIR2**;
 - si crea un **composito mediano**, ossia una collezione di immagini in cui ciascun pixel rappresenta il valore mediano di tutti i pixel delle immagini disponibili nel periodo scelto. Questo riduce ulteriormente la presenza di nuvole o outlier.
