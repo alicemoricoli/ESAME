@@ -342,10 +342,13 @@ dev.off()
 
 ## 4. Calcolo degli indici spettrali 📇
 Per valutare l'impatto dell'incendio sono stati calcolati gli indici **DVI** e **NDVI** per l'analisi della vegetazione.
+
 Il **DVI** (Difference Vegetation Index) misura la **densità e la biomassa della vegetazione**. Più è alto il valore del DVI, più abbondante è la vegetazione.
 Si calcola come:
 
-$` DVI = (NIR - Red)`$
+$$
+DVI = (NIR - Red)
+$$
 
 L'**NDVI** (Normalized Difference Vegetation Index) invece è un indice che misura lo stato di **salute della vegetazione** anch'esso utilizzando le bande NIR (B8) e Red (B4) ma restituisce valori normalizzati tra -1 e +1: 
 - NDVI vicino a +1--> vegetazione sana
@@ -355,7 +358,9 @@ L'**NDVI** (Normalized Difference Vegetation Index) invece è un indice che misu
 
 Si calcola come:
 
-$` NDVI = \frac{(NIR - Red)}{(NIR + Red)} `$
+$$
+NDVI = \frac{(NIR - Red)}{(NIR + Red)} 
+$$
 
 Per velocizzare il calcolo degli indici in R sono state usate le funzioni provenienti dal pacchetto imageRy.
 
@@ -364,14 +369,14 @@ Per velocizzare il calcolo degli indici in R sono state usate le funzioni proven
 Per l'immagine **pre incendio**:
 
 ``` r
-DVIpre = im.dvi(pre, 4, 1)  #per calcolare il DVI (immagine, banda NIR, banda R)
+DVIpre = im.dvi(pre, 4, 1)  #per calcolare il DVI (immagine, banda NIR, banda Red)
 plot(DVIpre, stretch = "lin", main = "DVI-pre", col=inferno(100))  #per visualizzare graficamente il risultato, si specificano titolo e colore
 dev.off()
 ```
 Analogamente per l'immagine **post incendio**:
 
 ``` r
-DVIpost = im.dvi(post, 4, 1) #per calcolare il DVI (immagine, banda NIR, banda R)
+DVIpost = im.dvi(post, 4, 1) #per calcolare il DVI (immagine, banda NIR, banda Red)
 plot(DVIpost, stretch = "lin", main = "NDVI-post", col=inferno(100)) #per visualizzare graficamente il risultato, si specificano titolo e colore
 dev.off()
 ```
@@ -391,7 +396,7 @@ dev.off()
 > Indice DVI pre e post incendio a confronto
 
 > [!NOTE]
-> *Dal confronto tra le due immagini risulta evidente la diminuzione di DVI nel tratto di corsa dell'immagine post-incendio.*
+> *Dal confronto tra le due immagini risulta evidente la diminuzione di DVI nel tratto di costa dell'immagine post-incendio.*
 
 #### NDVI: Normalized Difference Vegetation Index
 
@@ -445,7 +450,9 @@ Inoltre, per valutare l'impatto dell'incendio, è stato calcolato l'indice **NBR
 L'NBR è un indice spettrale progettato per **rilevare, mappare e valutare** gli incendi usando immagini satellitari.
 Si calcola come:
 
-$` NBR = \frac{(NIR - SWIR)}{(NIR + SWIR)} `$
+$$
+NBR = \frac{NIR - SWIR}{NIR + SWIR}
+$$
 
 - Valori alti di NBR (vicini a +1) → vegetazione sana e densa (molto NIR, poco SWIR-Short Wawe Infrared)
 
@@ -453,7 +460,9 @@ $` NBR = \frac{(NIR - SWIR)}{(NIR + SWIR)} `$
 
 Il NBR da solo è utile, ma il vero indicatore di severità è il dNBR (differenced NBR):
 
-$` dNBR=NBRpre−NBRpost `$
+$$
+dNBR = NBR_{pre} - NBR_{post}
+$$
 	​
 
 - dNBR alto → forte cambiamento, area bruciata severamente
