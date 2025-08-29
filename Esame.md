@@ -620,7 +620,7 @@ dev.off()
 > [!NOTE]
 > *Questo grafico a barre permette di vedere come nell'immagine pre i valori di NDVI siano maggiormente elevati, mentre nell'immagine post la situazione è inversa, con più valori di NDVI bassi rispetto a quelli elevati. Questo conferma l'impatto dell'incendio sulla vegetazione.*
 
-Per valutare quale sia stata la rispesa dell'area dopo l'incendio, si è confronta la situazione a due anni dall'incendio con quella pre incendio, per capire se la vegetazione sia tornata ai livelli pre-impatto. Peetanto è stata scaricata da GEE un'immagine mediana del periodo **1 luglio - 1 agosto 2019** utilizzando il codice **Javascript**:
+Per valutare quale sia stata la rispesa dell'area dopo l'incendio, si è confronta la situazione a due anni dall'incendio con quella pre incendio, per capire se la vegetazione sia tornata ai livelli pre-impatto. Pertanto è stata scaricata da GEE un'immagine mediana del periodo **1 luglio - 1 agosto 2019** utilizzando il codice **Javascript**:
 
 <details>
 <summary>codici JavaScript (cliccare qui)</summary>
