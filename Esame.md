@@ -245,12 +245,12 @@ In entrambi i codici:
 Una volta ottenute le immagini satellitari, queste sono state importate su R per poter fare un'analisi dettagliata.
 Per farlo, sono stati installati e richiamati in R i seguenti pacchetti:
 ``` r
-library(terra) #pacchetto utilizzato per l'analisi di dati spaziali con dati vettoriali e raster 
-library(imageRy) #pacchetto per la visualizzazione e manipolazione delle immagini raster 
-library(viridis) #pacchetto per creare immagini con differenti palette di colori
-library(ggridges) #pacchetto per la creazione di plot ridgeline
-library(ggplot2) #pacchetto per la creazione di grafici a barre
-library(patchwork) #pacchetto per l'unione dei grafici creati con ggplot2
+🌍 library(terra) #pacchetto utilizzato per l'analisi e gestione di dati vettoriali e raster 
+🖼️ library(imageRy) #pacchetto per la visualizzazione e manipolazione delle immagini raster 
+🎨 library(viridis) #pacchetto per creare immagini con differenti palette di colori  percettivamente uniformi (viridis, plasma, magma, inferno, cividis)
+📊 library(ggplot2) #pacchetto per la creazione di grafici
+📈 library(ggridges) #pacchetto per la creazione di plot ridgeline (curve di distribuzione sovrapposte).  Estensione di ggplot2 (plugin)
+🧩 library(patchwork) #pacchetto per l'unione dei grafici creati con ggplot2
 ```
 Per prima cosa è stata impostata la working directory e poi sono state importate e visualizzate le immagini. 
 
