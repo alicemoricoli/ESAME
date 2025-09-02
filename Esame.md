@@ -28,7 +28,7 @@ In particolare, per valutare i cambiamenti pre e post impatto, sono stati scelti
 > Monte San Bartolo il giorno successivo all'incendio
 
 ## 2. Acquisizione delle immagini satellitari 🛰️
-I dati utilizzati provengono dalla missione [Sentinel-2](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED?hl=it) dell'ESA (all'interno del programma Copernicus) e sono stati scaricati ed elaborati tramite la piattaforma [Google Earth Engine](https://earthengine.google.com/).
+I dati utilizzati provengono dalla missione [Sentinel-2](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED?hl=it) dell'ESA (all'interno del programma Copernicus) e sono stati scaricati tramite la piattaforma [Google Earth Engine](https://earthengine.google.com/).
 Per ottenere le immagini dell'area di interesse **prima** dell'incendio è stato utilizzato il seguente codice in **Javascript**:
 <details>
 <summary>codici JavaScript (cliccare qui)</summary>
