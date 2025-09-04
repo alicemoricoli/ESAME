@@ -453,7 +453,7 @@ $$
 NBR = \frac{NIR - SWIR}{NIR + SWIR}
 $$
 
-- Valori alti di NBR (vicini a +1) → vegetazione sana e densa (molto NIR, poco SWIR-Short Wawe Infrared)
+- Valori alti di NBR (vicini a +1) → vegetazione sana e densa (molto NIR, poco SWIR, Short-Wave Infrared)
 
 - Valori bassi o negativi (0 → -1) → aree bruciate o con poca vegetazione (SWIR alto, NIR basso)
 
