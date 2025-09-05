@@ -742,7 +742,7 @@ table = data.frame(NDVI, pre, post, twoyears)  #per creare un dataframe con i va
 table #per visualizzare il dataframe
 
 ggplottwoyears = ggplot(table, aes(x=NDVI, y=twoyears, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
-ggplotpreincendio + ggplotpostincendio + ggplottwoyears + plot_annotation(title = "Valori NDVI nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
+ggplotpreincendio + ggplotpostincendio + ggplottwoyears + plot_annotation(title = "Valori NDVI nell'area interessata dall’incendio")    #per unire i grafici creati, si specifica il titolo 
 dev.off()
 ```
 <p align="center">
