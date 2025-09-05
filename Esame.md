@@ -755,10 +755,9 @@ dev.off()
 > *Dal grafico è possibile osservare come, a due anni dall'incendio, la vegetazione si sia ripresa, ossia i valori di NDVI sopra il valore soglia sono aumentati e quelli sotto il valore soglia diminuiti. Pare anche che la vegetazione nel 2019 sia addirittura più presente rispetto al 2017 nella situazione pre incendio*
 
 ## 6. Risultati e conclusioni ⚓
-L'analisi delle immagini satellitari mostra chiaramente l'impatto dell'incendio sull'area del San Bartolo. 
-Inizialmente gran parte della vegetazione è stata distrutta, riducendone nettamente l’attività fotosintetica. Tuttavia, dopo due anni, l’area ha mostrato una forte capacità di rigenerazione: l’NDVI indica che la vegetazione non solo è tornata ai livelli pre-incendio, ma in alcuni punti li ha addirittura superati. Ciò dimostra l’elevata **resilienza** dell’ecosistema e la sua capacità di adattarsi e riprendersi dopo eventi di disturbo.
-È plausibile che l’incendio abbia favorito la germinazione di specie pioniere e ridotto la competizione, determinando un apparente incremento della vigoria vegetativa rispetto al periodo antecedente il disturbo.
-Ad ogni modo potrebbe trattarsi di una risposta temporanea, perciò andrebbero analizzati i valori di NDVI nel lungo tempo per capire se l'area si sia davvero ripristinata o se un possibile intervento possa risultare utile. 
+L’analisi delle immagini satellitari evidenzia l’impatto dell’incendio sull’area del San Bartolo.
+In una prima fase gran parte della vegetazione è stata distrutta, con una netta riduzione dell’attività fotosintetica. Tuttavia, dopo due anni l’area ha mostrato una notevole capacità di rigenerazione: l’NDVI indica che la vegetazione non solo è tornata ai livelli pre-incendio, ma in alcuni punti li ha addirittura superati. Questo risultato suggerisce un’elevata **resilienza** dell’ecosistema, probabilmente favorita dalla germinazione di **specie pioniere** e dalla **riduzione della competizione**, con un apparente incremento della vigoria vegetativa rispetto al periodo antecedente il disturbo.
+Resta comunque da verificare se tale risposta sia **temporanea** o **stabile nel tempo**: analisi multitemporali più estese sono necessarie per comprendere se l’area si sia effettivamente ripristinata o se interventi di supporto possano risultare utili.
 
 <p align="center">
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/foto_post.webp" alt="image" width="800">
