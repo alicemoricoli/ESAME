@@ -15,6 +15,10 @@
 
 ## 1. Introduzione e obiettivi dello studio ✔️
 Tra il **4** e **5 agosto 2017**, il **Parco Naturale del Monte San Bartolo** è stato interessato da un vasto **incendio**, che ha coinvolto tutta la falesia bruciando più di 150 ettari del parco a picco sul mare, distruggendo boschi, campi e case e arrivando a minacciare i borghi di **Fiorenzuola di Focara** e **Casteldimezzo**.
+<p align="center">
+  <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/IMMAGINI_marche_01carta.jpg">
+</p>
+
 Per valutare gli impatti ambientali dell'incendio sono state utilizzate delle immagini satellitari relative all'area compresa tra Fiorenzuola e Casteldimezzo.
 
 In particolare, per valutare i cambiamenti pre e post impatto, sono stati scelti i seguenti intervalli temporali per l'aquisizione delle immagini:
