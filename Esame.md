@@ -483,7 +483,7 @@ plot(nbr_pre, main=”NBR pre-incendio”) # visualizzazione NBR pre-incendio
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/nbr_pre.jpeg" alt="image" width="900">
 </p>
 
-Analogamente, per calcolo dell'**NBR post-incendio**:
+Analogamente, per il calcolo dell'**NBR post-incendio**:
 ``` r
 nbr_post= (post[[4]]-post[[5]])/ (post[[4]]+post[[5]]) # calcolo NBR post-incendio
 plot(nbr_post, main=”NBR post-incendio”) # visualizzazione NBR post-incendio
