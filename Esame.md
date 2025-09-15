@@ -502,7 +502,7 @@ plot(difnbr, main=”Differenza NBR pre e post incendio”) # visualizzazione di
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/difnbr.jpeg" alt="image" width="900">
 </p>
 
-Pre visualizzare tutto in un unico pannello multiframe:
+Per visualizzare tutto in un unico pannello multiframe:
 ``` r
 im.multiframe(1,3)
 plot(nbr_pre, main="NBR pre-incendio")
