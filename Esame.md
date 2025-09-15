@@ -473,6 +473,7 @@ $dNBR = NBRpre - NBRpost$
 
 - dNBR negativo → aumento della vegetazione (es. ricrescita post-incendio)
 
+Per il calcolo dell'**NBR pre-incendio** è stato impiegato il seguente cosice:
 ``` r
 nbr_pre= (pre[[4]]-pre[[5]])/ (pre[[4]]+pre[[5]]) # calcolo NBR pre-incendio
 plot(nbr_pre, main=”NBR pre-incendio”) # visualizzazione NBR pre-incendio
@@ -482,6 +483,7 @@ plot(nbr_pre, main=”NBR pre-incendio”) # visualizzazione NBR pre-incendio
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/nbr_pre.jpeg" alt="image" width="900">
 </p>
 
+Analogamente, per calcolo dell'**NBR post-incendio**:
 ``` r
 nbr_post= (post[[4]]-post[[5]])/ (post[[4]]+post[[5]]) # calcolo NBR post-incendio
 plot(nbr_post, main=”NBR post-incendio”) # visualizzazione NBR post-incendio
@@ -490,6 +492,7 @@ plot(nbr_post, main=”NBR post-incendio”) # visualizzazione NBR post-incendio
   <img src="https://github.com/alicemoricoli/Telerilevamento_2025/blob/main/Pics/nbr_post.jpeg" alt="image" width="900">
 </p>
 
+A questo punto si è calcolata la **differenza** tra i due indici:
 ``` r
 difnbr=nbr_pre-nbr_post # calcolo differenza pre-post incendio dei valori NBR
 plot(difnbr, main=”Differenza NBR pre e post incendio”) # visualizzazione differenza NBR
